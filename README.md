@@ -9,3 +9,4 @@ Steven Mota,
 Shauna Phaxay
 
 ## Meetings
+1. January 23rd - Meeting including the discussion of the design app, features and functions were also discussed.
