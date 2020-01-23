@@ -6,6 +6,6 @@ Jenna Frisch,
 James Slade,
 Ryan Grisset,
 Steven Mota,
-Shauna Phaxay,
+Shauna Phaxay
 
 ## Meetings
