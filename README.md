@@ -10,3 +10,8 @@ App developed by -
 
 ## Meetings
 - January 23rd - Meeting including the discussion of the design app, features and functions were also discussed.
+
+## Technologies Used
+- Git/Github
+- Wireframe (App Design)
+- Android Studio (App Development)
