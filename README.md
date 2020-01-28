@@ -9,7 +9,9 @@ App developed by -
 - Shauna Phaxay (Testing)
 
 ## Meetings
-- January 23rd - Meeting including the discussion of the design app, features and functions were also discussed.
+- January 23rd - Meeting included the discussion of the design app, features and functions were also discussed.
+- January 28th - Meeting included a continued discussion of the app, the color palette of the app was decided,
+we also talked about Object-Oriented Programming concepts to store cards and libraries
 
 ## Technologies Used
 - Git/Github
