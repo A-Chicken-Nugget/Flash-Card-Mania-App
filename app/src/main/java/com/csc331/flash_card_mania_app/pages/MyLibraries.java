@@ -1,19 +1,15 @@
 package com.csc331.flash_card_mania_app.pages;
 
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.Space;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.csc331.flash_card_mania_app.Library;
 import com.csc331.flash_card_mania_app.Main;
@@ -21,10 +17,8 @@ import com.csc331.flash_card_mania_app.R;
 import com.csc331.flash_card_mania_app.components.LibraryListing;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class MyLibraries extends AppCompatActivity {
     private Main mainInstance = Main.getInstance();
@@ -36,24 +30,52 @@ public class MyLibraries extends AppCompatActivity {
         final MyLibraries instance = this;
 
         setContentView(R.layout.my_libraries);
+        getSupportActionBar().hide();
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Log.d("cDebug","Count: " + mainInstance.getLibraries().size());
 
         HashMap<String,Library> libraries = mainInstance.getLibraries();
+        ArrayList<LibraryListing> tempListings = new ArrayList<>();
         LinearLayout layout = findViewById(R.id.library_layout);
-        layout.setDividerPadding(25);
 
-        for (Map.Entry<String,Library> library : libraries.entrySet()) {
-            LibraryListing library_listing = new LibraryListing(this,layout);
-            library_listing.setName(library.getValue().getName());
-            library_listing.setCardCount(library.getValue().getCards().size() + " cards");
+        for (Map.Entry<String,Library> entry : libraries.entrySet()) {
+            Library library = entry.getValue();
+
+            LibraryListing listing = new LibraryListing(this,layout);
+            listing.setName(library.getName());
+            listing.setSubject(library.getSubject());
+            listing.setCardCount(library.getCards().size() + " cards");
+            layout.addView(listing.getPanel());
+            tempListings.add(listing);
+
+            Space space = new Space(this);
+            space.setMinimumWidth(layout.getWidth());
+            space.setMinimumHeight(20);
+            layout.addView(space);
         }
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        Space space = new Space(this);
+        space.setMinimumWidth(layout.getWidth());
+        space.setMinimumHeight(135);
+        layout.addView(space);
+
+        final ArrayList<LibraryListing> listings = tempListings;
+
+        findViewById(R.id.mylibraries_back_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(instance, MainMenu.class);
 
                 startActivity(intent);
                 overridePendingTransition(0,0);
+            }
+        });
+        findViewById(R.id.mylibraries_delete_button).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                for (LibraryListing listing : listings) {
+                    listing.toggleCheckBox();
+                }
             }
         });
     }
