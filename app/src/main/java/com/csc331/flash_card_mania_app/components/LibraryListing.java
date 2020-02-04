@@ -16,21 +16,15 @@ public class LibraryListing {
         panel = LayoutInflater.from(context).inflate(R.layout.library_listing, layout, false);
     }
 
-    public boolean toggleCheckBox() {
-        CheckBox box = panel.findViewById(R.id.mylibraries_option_checkbox);
-
-        if (box.isShown()) {
-            box.setVisibility(View.INVISIBLE);
-        } else {
-            box.setVisibility(View.VISIBLE);
-        }
-        return box.isShown();
-    }
-
     public View getPanel() {
         return panel;
     }
-
+    public View getInnerPanel() {
+        return panel.findViewById(R.id.test_constraint);
+    }
+    public String getName() {
+        return ((TextView)panel.findViewById(R.id.library_name)).getText().toString();
+    }
     public void setName(String name) {
         ((TextView)panel.findViewById(R.id.library_name)).setText(name);
     }

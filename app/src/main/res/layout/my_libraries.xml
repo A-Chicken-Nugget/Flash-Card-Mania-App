@@ -7,19 +7,6 @@
     android:layout_height="match_parent"
     android:background="#9BBD21">
 
-    <ImageButton
-        android:id="@+id/mylibraries_delete_button"
-        android:layout_width="64dp"
-        android:layout_height="44dp"
-        android:background="#00FFFFFF"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/trash_can" />
-
     <Button
         android:id="@+id/mylibraries_back_button"
         android:layout_width="wrap_content"

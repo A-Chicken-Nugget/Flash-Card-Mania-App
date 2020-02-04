@@ -1,14 +1,17 @@
 package com.csc331.flash_card_mania_app.pages;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Space;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.csc331.flash_card_mania_app.Library;
@@ -35,11 +38,13 @@ public class MyLibraries extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Log.d("cDebug","Count: " + mainInstance.getLibraries().size());
+//        Log.d("cDebug","Count: " + mainInstance.getLibraries().size());
 
         HashMap<String,Library> libraries = mainInstance.getLibraries();
-        ArrayList<LibraryListing> tempListings = new ArrayList<>();
+        ArrayList<LibraryListing> listings = new ArrayList<>();
         LinearLayout layout = findViewById(R.id.library_layout);
+
+        Log.d("cDebug","Parent width: " + layout.getMeasuredWidth());
 
         for (Map.Entry<String,Library> entry : libraries.entrySet()) {
             Library library = entry.getValue();
@@ -49,7 +54,18 @@ public class MyLibraries extends AppCompatActivity {
             listing.setSubject(library.getSubject());
             listing.setCardCount(library.getCards().size() + " cards");
             layout.addView(listing.getPanel());
-            tempListings.add(listing);
+            listings.add(listing);
+
+            final LibraryListing test = listing;
+            listing.getPanel().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onGlobalLayout() {
+                    test.getPanel().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    Log.d("cDebug","Outer-panel Width: " + test.getPanel().getWidth());
+                    Log.d("cDebug","Inner-panel Width: " + test.getInnerPanel().getWidth());
+                }
+            });
 
             Space space = new Space(this);
             space.setMinimumWidth(layout.getWidth());
@@ -61,8 +77,15 @@ public class MyLibraries extends AppCompatActivity {
         space.setMinimumHeight(135);
         layout.addView(space);
 
-        final ArrayList<LibraryListing> listings = tempListings;
-
+        final View layoutt = layout;
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onGlobalLayout() {
+                layoutt.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                Log.d("cDebug","Layout Width: " + layoutt.getWidth());
+            }
+        });
         findViewById(R.id.mylibraries_back_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(instance, MainMenu.class);
@@ -71,12 +94,14 @@ public class MyLibraries extends AppCompatActivity {
                 overridePendingTransition(0,0);
             }
         });
-        findViewById(R.id.mylibraries_delete_button).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                for (LibraryListing listing : listings) {
-                    listing.toggleCheckBox();
+        for (LibraryListing item : listings) {
+            final LibraryListing listing = item;
+
+            listing.getPanel().findViewById(R.id.mylibraries_listing_edit_button).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Log.d("cDebug","Clicked " + listing.getName());
                 }
-            }
-        });
+            });
+        }
     }
 }

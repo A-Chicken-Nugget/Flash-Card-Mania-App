@@ -11,14 +11,14 @@ public class Main {
 
     public Main() {
         myLibraries = new HashMap<String,Library>() {{
-            put("Test Library 1",new Library("Test Library 1","Science"));
+            put("Test Library 1",new Library("Test Library 1","Science", "Test description"));
         }};
     }
 
     public UserProfile getProfile() {
         return userProfile;
     }
-    public Library getLibrary(String name) {
+    public Library getLibraryByName(String name) {
         return myLibraries.get(name);
     }
     public HashMap<String,Library> getLibraries() {
