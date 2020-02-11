@@ -13,6 +13,9 @@ App developed by -
 - January 28th - Meeting included a continued discussion of the app, the color palette of the app was decided,
 we also talked about Object-Oriented Programming concepts to store cards and libraries
 - January 30th - Meeting included design of the app, this included navigation, look and feel, and UX and UI concepts. Some backend concepts where also discussed (RESTful API)
+- February 4th - Short Meeting included the final design choices, the programmers focused on back-end concepts and front-end details
+- February 6th - Meeting included programmers working out details of Android development. Design was talked about in terms of refinement.
+- February 11th - Meeting was mostly focused on programmers. Small talks about design.
 ## Technologies Used
 - Git/Github (Version Control Software)
 - Wireframe (App Design)
