@@ -33,7 +33,7 @@
             android:id="@+id/manageLibrary_page_title"
             android:layout_width="132dp"
             android:layout_height="31dp"
-            android:text="My Libraries"
+            android:text="View Library"
             android:textColor="#000000"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -76,6 +76,15 @@
             android:gravity="center"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/viewLibrary_description"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Library Description"
+                android:textColor="#000000"
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 

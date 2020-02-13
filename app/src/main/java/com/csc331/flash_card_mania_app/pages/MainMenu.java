@@ -37,8 +37,6 @@ public class MainMenu extends AppCompatActivity {
         });
         findViewById(R.id.about_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int id = mainInstance.getLibraries().size() + 1;
-                mainInstance.getLibraries().put("Test Library " + id, new Library("Test Library " + id,"Math"));
             }
         });
     }

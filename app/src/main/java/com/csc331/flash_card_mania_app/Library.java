@@ -16,7 +16,7 @@ public class Library {
         this.description = description;
 
         cards = new ArrayList<Card>() {{
-            add(new Card());
+            add(new Card("test hint",50));
         }};
     }
 
@@ -27,6 +27,9 @@ public class Library {
         cards.remove(card);
     }
 
+    public UUID getID() {
+        return id;
+    }
     public String getName() {
         return name;
     }

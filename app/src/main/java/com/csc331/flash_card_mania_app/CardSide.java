@@ -3,22 +3,25 @@ package com.csc331.flash_card_mania_app;
 import java.io.File;
 
 public class CardSide {
+    private boolean type;
     private String text;
-    private File image;
+    private String imagePath;
 
     public CardSide(String text) {
         this.text = text;
     }
-    public CardSide(File image) {
-        this.image = image;
-    }
 
+    public String getContents() {
+        if (!type) {
+            return text;
+        } else {
+            return imagePath;
+        }
+    }
     public void setText(String text) {
         this.text = text;
-        image = null;
     }
-    public void setImage(File image) {
-        this.image = image;
-        text = null;
+    public void setImage(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

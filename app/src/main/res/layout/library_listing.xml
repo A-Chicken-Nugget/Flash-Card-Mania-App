@@ -10,10 +10,11 @@
     android:paddingRight="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/test_constraint"
+        android:id="@+id/libraryListing_bodyConstraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:clickable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
