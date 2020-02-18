@@ -22,7 +22,8 @@ we also talked about Object-Oriented Programming concepts to store cards and lib
 - Git/Github (Version Control Software)
 - Wireframe (App Design)
 - Android Studio (App Development)
+- Discord (Communication)
 
-## Programming Languages
+## Languages
 - Java
 - XML (Markup)
