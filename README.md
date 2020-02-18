@@ -16,6 +16,7 @@ we also talked about Object-Oriented Programming concepts to store cards and lib
 - February 4th - Short Meeting included the final design choices, the programmers focused on back-end concepts and front-end details
 - February 6th - Meeting included programmers working out details of Android development. Design was talked about in terms of refinement.
 - February 11th - Meeting was mostly focused on programmers. Small talks about design.
+- February 18th - Meeting included talks of the presentation. Our current work is summed up and presented in our github repository.
 
 ## Technologies Used
 - Git/Github (Version Control Software)
