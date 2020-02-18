@@ -24,4 +24,4 @@ we also talked about Object-Oriented Programming concepts to store cards and lib
 
 ## Programming Languages
 - Java
-- XML
+- XML (Markup)
