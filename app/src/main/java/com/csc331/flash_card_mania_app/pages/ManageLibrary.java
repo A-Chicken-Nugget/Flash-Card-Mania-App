@@ -3,6 +3,7 @@ package com.csc331.flash_card_mania_app.pages;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class ManageLibrary extends AppCompatActivity {
             ((EditText)findViewById(R.id.manageLibrary_question3InputField)).setText(library.getDescription());
             ((Button)findViewById(R.id.manageLibrary_updateButton)).setText("Update");
         }
+        ((TextView)findViewById(R.id.manageLibrary_page_title)).setGravity(Gravity.CENTER);
 
         //Handle when the back button is clicked
         findViewById(R.id.manageLibrary_back_button).setOnClickListener(new View.OnClickListener() {
@@ -77,10 +79,11 @@ public class ManageLibrary extends AppCompatActivity {
 
                     //Check if the name of the library is already in use
                     for (Map.Entry<UUID, Library> entry : libraries.entrySet()) {
-                        Library library = entry.getValue();
+                        Library libraryy = entry.getValue();
 
+                        //TODO redo at later date. Make it check for a duplicate name if user is editing
                         if (library == null) {
-                            if (library.getName().toLowerCase().equals(question1.toLowerCase())) {
+                            if (libraryy.getName().toLowerCase().equals(question1.toLowerCase())) {
                                 exists = true;
                                 break;
                             }

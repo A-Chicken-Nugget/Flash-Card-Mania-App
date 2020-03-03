@@ -5,19 +5,19 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9BBD21">
+    android:background="#B8A79F">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        android:background="#9BBD21"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/mylibraries_back_button"
+            android:id="@+id/viewLibrary_back_button"
             android:layout_width="102dp"
             android:layout_height="38dp"
             android:background="#00FFFFFF"
@@ -44,7 +44,7 @@
             tools:visibility="visible" />
 
         <ImageButton
-            android:id="@+id/mylibraries_add_button"
+            android:id="@+id/viewLibrary_add_button"
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:background="#00FFFFFF"
@@ -58,34 +58,112 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewLibrary_descriptionDisplay"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#B8A79F"
-        android:paddingTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="135dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
 
+        <TextView
+            android:id="@+id/viewLibrary_description"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:text="Library Description"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/viewLibrary_editButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewLibrary_description"
+            app:srcCompat="@mipmap/pencil"
+            tools:visibility="visible" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/viewLibrary_descriptionInput"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/viewLibrary_descriptionInputValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Library Description"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/viewLibrary_saveDescription"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/viewLibrary_discardDescriptionChanges"
+            app:layout_constraintTop_toBottomOf="@+id/viewLibrary_descriptionInput"
+            app:srcCompat="@mipmap/check_mark"
+            tools:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/viewLibrary_discardDescriptionChanges"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewLibrary_descriptionInput"
+            app:srcCompat="@mipmap/x_mark"
+            tools:visibility="gone" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/viewLibrary_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewLibrary_descriptionDisplay"
+        tools:visibility="visible">
+
         <LinearLayout
-            android:id="@+id/library_layout"
+            android:id="@+id/viewLibrary_cardLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/viewLibrary_description"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Library Description"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
+            android:orientation="vertical" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

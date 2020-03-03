@@ -28,6 +28,14 @@
             android:label="Create Library"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".pages.ViewLibrary"
+            android:label="View Library"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".pages.ManageCard"
+            android:label="Manage Card"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

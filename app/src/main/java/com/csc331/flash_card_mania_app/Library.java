@@ -39,6 +39,16 @@ public class Library {
     public String getDescription() {
         return description;
     }
+    public Card getCardFromID(UUID id) {
+        Card returnCard = null;
+
+        for (Card card : cards) {
+            if (card.getID().equals(id)) {
+                returnCard = card;
+            }
+        }
+        return returnCard;
+    }
     public ArrayList<Card> getCards() {
         return cards;
     }

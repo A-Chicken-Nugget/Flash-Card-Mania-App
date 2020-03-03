@@ -55,12 +55,56 @@ public class MyLibraries extends AppCompatActivity {
             for (Map.Entry<UUID,Library> entry : libraries.entrySet()) {
                 Library library = entry.getValue();
 
-                LibraryListing listing = new LibraryListing(this,layout,library);
+                final LibraryListing listing = new LibraryListing(this,layout,library);
                 listing.setName(library.getName());
                 listing.setSubject(library.getSubject());
                 listing.setCardCount(library.getCards().size() + " cards");
                 layout.addView(listing.getPanel());
                 listings.add(listing);
+
+                //Handle when each listing is clicked
+                listing.getPanel().findViewById(R.id.libraryListing_bodyConstraint).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(instance, ViewLibrary.class);
+
+                        //Attach the listings library id
+                        intent.putExtra("libraryId",String.valueOf(listing.getLibrary().getID()));
+                        startActivity(intent);
+                        overridePendingTransition(0,0);
+                    }
+                });
+                //Handle when each listings edit button is clicked
+                listing.getPanel().findViewById(R.id.mylibraries_listing_edit_button).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(instance, ManageLibrary.class);
+
+                        //Attach the listings library id
+                        intent.putExtra("libraryId",String.valueOf(listing.getLibrary().getID()));
+                        startActivity(intent);
+                        overridePendingTransition(0,0);
+                    }
+                });
+                //Handle when each listings delete button is clicked
+                listing.getPanel().findViewById(R.id.mylibraries_listing_delete_button).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(instance).create();
+                        alertDialog.setTitle("Are you sure?");
+                        alertDialog.setMessage("Are you sure you want to delete the '" + listing.getName() + "' library?");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                mainInstance.getLibraries().remove(listing.getLibrary().getID());
+                                startActivity(new Intent(instance, MyLibraries.class));
+                                overridePendingTransition(0,0);
+                            }
+                        });
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alertDialog.show();
+                    }
+                });
 
                 Space space = new Space(this);
                 space.setMinimumWidth(layout.getWidth());
@@ -90,47 +134,5 @@ public class MyLibraries extends AppCompatActivity {
                 overridePendingTransition(0,0);
             }
         });
-        for (LibraryListing item : listings) {
-            final LibraryListing listing = item;
-
-            //Handle when each listing is clicked
-            listing.getPanel().findViewById(R.id.libraryListing_bodyConstraint).setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Log.d("cDebug","Testttt");
-                }
-            });
-            //Handle when each listings edit button is clicked
-            listing.getPanel().findViewById(R.id.mylibraries_listing_edit_button).setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent intent = new Intent(instance, ManageLibrary.class);
-
-                    //Attach the listings library id
-                    intent.putExtra("libraryId",String.valueOf(listing.getLibrary().getID()));
-                    startActivity(intent);
-                    overridePendingTransition(0,0);
-                }
-            });
-            //Handle when each listings delete button is clicked
-            listing.getPanel().findViewById(R.id.mylibraries_listing_delete_button).setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(instance).create();
-                    alertDialog.setTitle("Are you sure?");
-                    alertDialog.setMessage("Are you sure you want to delete the '" + listing.getName() + "' library?");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            mainInstance.getLibraries().remove(listing.getLibrary().getID());
-                            startActivity(new Intent(instance, MyLibraries.class));
-                            overridePendingTransition(0,0);
-                        }
-                    });
-                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    alertDialog.show();
-                }
-            });
-        }
     }
 }
