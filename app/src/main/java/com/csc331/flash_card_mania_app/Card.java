@@ -21,14 +21,8 @@ public class Card {
         this.difficulty = difficulty;
     }
 
-    public CardSide flip() {
+    public void flip() {
         side = !side;
-
-        if (side) {
-            return front;
-        } else {
-            return back;
-        }
     }
 
     public UUID getID() {
@@ -55,5 +49,11 @@ public class Card {
         } else {
             return back;
         }
+    }
+    public void setHint(String hint) {
+        this.hint = hint;
+    }
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 }

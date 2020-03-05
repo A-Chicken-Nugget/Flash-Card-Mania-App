@@ -14,6 +14,7 @@ import com.csc331.flash_card_mania_app.Library;
 import com.csc331.flash_card_mania_app.R;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 
 public class CardListing {
@@ -30,6 +31,9 @@ public class CardListing {
             View imageView = panel.findViewById(R.id.cardListing_image);
 
             ((ImageView)imageView).setImageBitmap(BitmapFactory.decodeStream(new BufferedInputStream(cardFront.getImageStream())));
+            if (cardFront.getImageBtyes() != null) {
+                ((ImageView)imageView).setImageBitmap(BitmapFactory.decodeStream(new ByteArrayInputStream(cardFront.getImageBtyes())));
+            }
             panel.findViewById(R.id.cardListing_text).setVisibility(View.INVISIBLE);
             imageView.setVisibility(View.VISIBLE);
         } else {

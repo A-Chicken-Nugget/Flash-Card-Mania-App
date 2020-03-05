@@ -125,7 +125,7 @@ public class ViewLibrary extends AppCompatActivity {
 
         if (cards.size() > 0) {
             for (Card card : cards) {
-                CardListing listing = new CardListing(this,layout,card);
+                final CardListing listing = new CardListing(this,layout,card);
                 layout.addView(listing.getPanel());
                 listings.add(listing);
 
@@ -133,6 +133,41 @@ public class ViewLibrary extends AppCompatActivity {
                 space.setMinimumWidth(layout.getWidth());
                 space.setMinimumHeight(20);
                 layout.addView(space);
+              
+                //Handle when the edit button is clicked
+                listing.getPanel().findViewById(R.id.cardListing_editButton).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(instance, ManageCard.class);
+                        intent.putExtra("libraryId",id);
+                        intent.putExtra("cardId",listing.getCard().getID().toString());
+                        startActivity(intent);
+                        overridePendingTransition(0,0);
+                    }
+                });
+                //Handle when each listings delete button is clicked
+                listing.getPanel().findViewById(R.id.cardListing_deleteButton).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(instance).create();
+                        alertDialog.setTitle("Are you sure?");
+                        alertDialog.setMessage("Are you sure you want to delete the card?");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                library.deleteCard(listing.getCard());
+
+                                Intent intent = new Intent(instance, ViewLibrary.class);
+                                intent.putExtra("libraryId",library.getID().toString());
+                                startActivity(intent);
+                                overridePendingTransition(0,0);
+                            }
+                        });
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alertDialog.show();
+                    }
+                });
             }
         } else {
             TextView text = new TextView(this);
