@@ -38,8 +38,10 @@ import com.csc331.flash_card_mania_app.R;
 import com.csc331.flash_card_mania_app.components.CardDisplay;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,13 +71,13 @@ public class ManageCard extends AppCompatActivity {
             //Front content
             card.getFront().setType(cardRef.getFront().getType());
             if (cardRef.getFront().getType()) {
-                card.getFront().setImage(cardRef.getFront().getContents());
+                card.getFront().setImageStream(cardRef.getFront().getImageStream());
             } else {
-                card.getFront().setText(cardRef.getFront().getContents());
+                card.getFront().setText(cardRef.getFront().getText());
             }
 
             //Back content
-            card.getBack().setText(cardRef.getBack().getContents());
+            card.getBack().setText(cardRef.getBack().getText());
         }
 
 
@@ -90,7 +92,7 @@ public class ManageCard extends AppCompatActivity {
 
         //Populate fields with card data
         if (!card.getShownSide().getType()) {
-            ((TextView)findViewById(R.id.manageCard_inputText)).setText(cardDisplay.getCard().getShownSide().getContents());
+            ((TextView)findViewById(R.id.manageCard_inputText)).setText(cardDisplay.getCard().getShownSide().getText());
         } else {
 
         }
@@ -150,7 +152,6 @@ public class ManageCard extends AppCompatActivity {
         findViewById(R.id.manageCard_cardDisplay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final View view = v;
                 final ObjectAnimator oa1 = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0f);
                 final ObjectAnimator oa2 = ObjectAnimator.ofFloat(v, "scaleX", 0f, 1f);
                 oa1.setInterpolator(new DecelerateInterpolator());
@@ -164,19 +165,19 @@ public class ManageCard extends AppCompatActivity {
 
                         if (card.getCurrentSide()) {
                             findViewById(R.id.manageCard_sideTypeCheckbox).setVisibility(View.VISIBLE);
+                            ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getText());
                             if (card.getFront().getType()) {
                                 findViewById(R.id.manageCard_textInputLayout).setVisibility(View.GONE);
                                 findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.VISIBLE);
                             } else {
                                 findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.GONE);
                                 findViewById(R.id.manageCard_textInputLayout).setVisibility(View.VISIBLE);
-                                ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getContents());
                             }
                         } else {
                             findViewById(R.id.manageCard_sideTypeCheckbox).setVisibility(View.GONE);
                             findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.GONE);
                             findViewById(R.id.manageCard_textInputLayout).setVisibility(View.VISIBLE);
-                            ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getContents());
+                            ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getText());
                         }
                     }
                 });
@@ -215,7 +216,16 @@ public class ManageCard extends AppCompatActivity {
         if (requestCode == PICK_PHOTO && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
 
-            card.getFront().setImage(selectedImage.getPath());
+            try {
+                InputStream stream = getContentResolver().openInputStream(selectedImage);
+                byte[] buffer = new byte[stream.available()];
+                stream.read(buffer);
+
+                InputStream targetStream = new ByteArrayInputStream(buffer);
+                card.getFront().setImageStream(targetStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             ((TextView)findViewById(R.id.manageCard_imageName)).setText("test");
             cardDisplay.updateContents();
         }

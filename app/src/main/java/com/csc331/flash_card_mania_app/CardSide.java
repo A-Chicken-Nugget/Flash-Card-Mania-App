@@ -3,12 +3,12 @@ package com.csc331.flash_card_mania_app;
 import android.net.Uri;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class CardSide {
     private boolean type;
     private String text;
-    private String imagePath;
-    private Uri uri;
+    private InputStream imageStream;
 
     public CardSide(String text) {
         this.text = text;
@@ -17,29 +17,22 @@ public class CardSide {
     public boolean getType() {
         return type;
     }
-    public String getContents() {
-        if (!type) {
-            return text;
-        } else {
-            return imagePath;
-        }
+    public String getText() {
+        return text;
     }
-    public Uri getUri() {
-        return uri;
+    public InputStream getImageStream() {
+        return imageStream;
     }
 
     public void setText(String text) {
         this.text = text;
         type = false;
     }
-    public void setImage(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImageStream(InputStream imageStream) {
+        this.imageStream = imageStream;
         type = true;
     }
     public void setType(boolean type) {
         this.type = type;
-    }
-    public void setUri(Uri uri) {
-        this.uri = uri;
     }
 }

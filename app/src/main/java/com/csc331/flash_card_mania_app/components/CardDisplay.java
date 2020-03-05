@@ -16,6 +16,7 @@ import com.csc331.flash_card_mania_app.Card;
 import com.csc331.flash_card_mania_app.CardSide;
 import com.csc331.flash_card_mania_app.R;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,27 +45,25 @@ public class CardDisplay {
             ((TextView)panel.findViewById(R.id.card_sideDisplay)).setText("Front");
             if (cardFront.getType()) {
                 View imageView = panel.findViewById(R.id.card_imageFront);
-                String filePath = cardFront.getContents();
 
-                if (filePath != null) {
-                    ((ImageView)imageView).setImageURI(Uri.fromFile(new File(filePath)));
-                }
+                Log.d("cDebug","blah");
+                ((ImageView)imageView).setImageBitmap(BitmapFactory.decodeStream(new BufferedInputStream(cardFront.getImageStream())));
                 imageView.setVisibility(View.VISIBLE);
             } else {
-                ((TextView)panel.findViewById(R.id.card_textFront)).setText(cardFront.getContents());
+                ((TextView)panel.findViewById(R.id.card_textFront)).setText(cardFront.getText());
                 panel.findViewById(R.id.card_textFront).setVisibility(View.VISIBLE);
-                panel.findViewById(R.id.card_imageFront).setVisibility(View.INVISIBLE);
+                panel.findViewById(R.id.card_imageFront).setVisibility(View.GONE);
             }
-            panel.findViewById(R.id.card_textBack).setVisibility(View.INVISIBLE);
+            panel.findViewById(R.id.card_textBack).setVisibility(View.GONE);
         } else {
             CardSide cardBack = card.getBack();
 
             ((TextView)panel.findViewById(R.id.card_sideDisplay)).setText("Back");
-            ((TextView)panel.findViewById(R.id.card_textBack)).setText(cardBack.getContents());
+            ((TextView)panel.findViewById(R.id.card_textBack)).setText(cardBack.getText());
             panel.findViewById(R.id.card_textBack).setVisibility(View.VISIBLE);
 
-            panel.findViewById(R.id.card_textFront).setVisibility(View.INVISIBLE);
-            panel.findViewById(R.id.card_imageFront).setVisibility(View.INVISIBLE);
+            panel.findViewById(R.id.card_textFront).setVisibility(View.GONE);
+            panel.findViewById(R.id.card_imageFront).setVisibility(View.GONE);
         }
     }
 
