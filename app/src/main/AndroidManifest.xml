@@ -40,6 +40,10 @@
             android:label="Manage Card"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".pages.Learn"
+            android:label="Learn"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

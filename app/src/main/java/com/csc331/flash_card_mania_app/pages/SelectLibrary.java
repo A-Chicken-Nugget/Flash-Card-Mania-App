@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ import java.util.UUID;
 
 public class SelectLibrary extends AppCompatActivity {
     private Main mainInstance = Main.getInstance();
-
+    private String randomized = "False";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,15 @@ public class SelectLibrary extends AppCompatActivity {
         ArrayList<LibraryListingOnly> listings = new ArrayList<>();
         LinearLayout layout = findViewById(R.id.library_layout);
 
+        findViewById(R.id.selectLibrary_Checkbox).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!((CheckBox)v).isChecked()) {
+                    randomized = "True";
+                }
+            }
+        });
+
         //If the user has created libraries
         if (libraries.size() > 0) {
             //Layout the libraries and create their listing instances
@@ -65,10 +75,11 @@ public class SelectLibrary extends AppCompatActivity {
                 //Handle when each listing is clicked
                 listing.getPanel().findViewById(R.id.libraryListingOnly_bodyConstraint).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent intent = new Intent(instance, ViewLibrary.class);
+                        Intent intent = new Intent(instance, Learn.class);
 
                         //Attach the listings library id
                         intent.putExtra("libraryId",String.valueOf(listing.getLibrary().getID()));
+                        intent.putExtra("isRandom",randomized);
                         startActivity(intent);
                         overridePendingTransition(0,0);
                     }
