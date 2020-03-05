@@ -35,6 +35,14 @@ public class MainMenu extends AppCompatActivity {
                 overridePendingTransition(0,0);
             }
         });
+        findViewById(R.id.learn_button).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(instance, SelectLibrary.class);
+
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        });
         findViewById(R.id.about_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             }

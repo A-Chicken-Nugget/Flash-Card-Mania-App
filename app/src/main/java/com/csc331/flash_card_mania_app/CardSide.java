@@ -21,6 +21,8 @@ public class CardSide {
     public String getText() {
         return text;
     }
+    public InputStream getImageStream() {
+        return imageStream;
     public byte[] getImageBtyes() {
         return imageBytes;
     }
@@ -28,6 +30,9 @@ public class CardSide {
     public void setText(String text) {
         this.text = text;
         type = false;
+    }
+    public void setImageStream(InputStream imageStream) {
+        this.imageStream = imageStream;
     }
     public void setImageBytes(byte[] bytes) {
         imageBytes = bytes;

@@ -4,6 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +31,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -96,7 +101,6 @@ public class ManageCard extends AppCompatActivity {
             //Back content
             card.getBack().setText(cardRef.getBack().getText());
         }
-
         cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.manageCard_cardDisplay),card);
 
         //Populate fields with card data
@@ -180,7 +184,6 @@ public class ManageCard extends AppCompatActivity {
                             } else {
                                 findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.GONE);
                                 findViewById(R.id.manageCard_textInputLayout).setVisibility(View.VISIBLE);
-                                ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getText());
                             }
                         } else {
                             findViewById(R.id.manageCard_sideTypeCheckbox).setVisibility(View.GONE);

@@ -50,7 +50,6 @@ public class Card {
             return back;
         }
     }
-
     public void setHint(String hint) {
         this.hint = hint;
     }
