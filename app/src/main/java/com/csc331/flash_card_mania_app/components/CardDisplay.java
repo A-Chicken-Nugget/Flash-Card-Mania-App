@@ -47,9 +47,6 @@ public class CardDisplay {
             if (cardFront.getType()) {
                 View imageView = panel.findViewById(R.id.card_imageFront);
 
-                Log.d("cDebug","blah");
-                ((ImageView)imageView).setImageBitmap(BitmapFactory.decodeStream(new BufferedInputStream(cardFront.getImageStream())));
-
                 if (cardFront.getImageBtyes() != null) {
                     ((ImageView)imageView).setImageBitmap(BitmapFactory.decodeStream(new ByteArrayInputStream(cardFront.getImageBtyes())));
                 }
