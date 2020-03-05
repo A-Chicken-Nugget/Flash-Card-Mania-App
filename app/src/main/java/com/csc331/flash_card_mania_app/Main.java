@@ -1,40 +1,44 @@
 package com.csc331.flash_card_mania_app;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+public class Main {
+    private static Main instance;
+    private UserProfile userProfile;
+    private HashMap<UUID,Library> myLibraries;
 
-public class Main extends AppCompatActivity {
+    public Main() {
+        myLibraries = new HashMap<UUID,Library>() {{
+            Library library = new Library("Default Library 1","Science", "Test description");
+            put(library.getID(),library);
+            library = new Library("Default Library 2","Math","......");
+            put(library.getID(),library);
+        }};
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void loadData() {
 
-        final Main instance = this;
+    }
+    public void saveData() {
 
-        //
-        // Note: This is all temporary just so you guys can get a feel for how it works
-        //
+    }
 
-        //This is the best way so far i've found to log debug messages
-        Log.d("cDebug","Main has been ran");
-
-        //Sets the default initial view
-        setContentView(R.layout.main);
-
-        //Add a listener to handle when the button is clicked
-        findViewById(R.id.main_continue_button).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Create to tell android what we activity we want to start
-                Intent intent = new Intent(instance, Page2.class);
-
-                //Start the activity
-                startActivity(intent);
-            }
-        });
+    public UserProfile getProfile() {
+        return userProfile;
+    }
+    public Library getLibraryById(UUID id) {
+        return myLibraries.get(id);
+    }
+    public HashMap<UUID,Library> getLibraries() {
+        return myLibraries;
+    }
+    public static Main getInstance() {
+        if (instance == null) {
+            instance = new Main();
+        }
+        return instance;
     }
 }
