@@ -4,10 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,12 +27,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.csc331.flash_card_mania_app.Card;
 import com.csc331.flash_card_mania_app.Library;
@@ -50,6 +56,7 @@ import java.util.UUID;
 public class ManageCard extends AppCompatActivity {
     private Main mainInstance = Main.getInstance();
     private static final int PICK_PHOTO = 45;
+    private Library library;
     private Card card;
     private CardDisplay cardDisplay;
 
@@ -61,25 +68,9 @@ public class ManageCard extends AppCompatActivity {
         //If they are editing a card, get the given id
         final String libraryId = getIntent().getStringExtra("libraryId");
         final String cardId = getIntent().getStringExtra("cardId");
+        library = mainInstance.getLibraryById(UUID.fromString(libraryId));
         //Create a new card for this form
-        card = new Card();
-
-        //If a cardId is passed in, set the new cards info accordingly
-        if (cardId != null) {
-            Card cardRef = mainInstance.getLibraryById(UUID.fromString(libraryId)).getCardFromID(UUID.fromString(cardId));
-
-            //Front content
-            card.getFront().setType(cardRef.getFront().getType());
-            if (cardRef.getFront().getType()) {
-                card.getFront().setImageStream(cardRef.getFront().getImageStream());
-            } else {
-                card.getFront().setText(cardRef.getFront().getText());
-            }
-
-            //Back content
-            card.getBack().setText(cardRef.getBack().getText());
-        }
-
+        card = (cardId == null ? new Card() : library.getCardFromID(UUID.fromString(cardId)));
 
         //Set this pages view layout
         setContentView(R.layout.manage_card);
@@ -88,14 +79,32 @@ public class ManageCard extends AppCompatActivity {
         //Remove the device notification bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        //If a cardId is passed in, set the new cards info accordingly
+        if (cardId != null) {
+            ((TextView)findViewById(R.id.manageCard_pageTitle)).setText("Update Card");
+            ((Button)findViewById(R.id.manageCard_submitButton)).setText("Update");
+            Card cardRef = library.getCardFromID(UUID.fromString(cardId));
+
+            //Front content
+            card.getFront().setType(cardRef.getFront().getType());
+            if (cardRef.getFront().getType()) {
+                card.getFront().setImageBytes(cardRef.getFront().getImageBtyes());
+            } else {
+                card.getFront().setText(cardRef.getFront().getText());
+            }
+
+            //Back content
+            card.getBack().setText(cardRef.getBack().getText());
+        }
+
         cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.manageCard_cardDisplay),card);
 
         //Populate fields with card data
-        if (!card.getShownSide().getType()) {
+        if (!card.getFront().getType()) {
             ((TextView)findViewById(R.id.manageCard_inputText)).setText(cardDisplay.getCard().getShownSide().getText());
-        } else {
-
         }
+        ((SeekBar)findViewById(R.id.manageCard_difficultyBar)).setProgress(card.getDifficulty());
+        ((TextView)findViewById(R.id.manageCard_hintInputField)).setText(card.getHint());
 
         //Handle when the back button is clicked
         findViewById(R.id.manageCard_back_button).setOnClickListener(new View.OnClickListener() {
@@ -165,13 +174,13 @@ public class ManageCard extends AppCompatActivity {
 
                         if (card.getCurrentSide()) {
                             findViewById(R.id.manageCard_sideTypeCheckbox).setVisibility(View.VISIBLE);
-                            ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getText());
                             if (card.getFront().getType()) {
                                 findViewById(R.id.manageCard_textInputLayout).setVisibility(View.GONE);
                                 findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.VISIBLE);
                             } else {
                                 findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.GONE);
                                 findViewById(R.id.manageCard_textInputLayout).setVisibility(View.VISIBLE);
+                                ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getText());
                             }
                         } else {
                             findViewById(R.id.manageCard_sideTypeCheckbox).setVisibility(View.GONE);
@@ -199,6 +208,7 @@ public class ManageCard extends AppCompatActivity {
 
                     findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.GONE);
                     findViewById(R.id.manageCard_textInputLayout).setVisibility(View.VISIBLE);
+                    ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getText());
                 } else {
                     card.getFront().setType(true);
                     cardDisplay.getPanel().findViewById(R.id.card_textFront).setVisibility(View.GONE);
@@ -207,6 +217,32 @@ public class ManageCard extends AppCompatActivity {
                     findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.VISIBLE);
                     findViewById(R.id.manageCard_textInputLayout).setVisibility(View.GONE);
                 }
+            }
+        });
+        //Handle when the submit button is clicked
+        findViewById(R.id.manageCard_submitButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Card newCard = new Card();
+
+                if (card.getFront().getType()) {
+                    if (card.getFront().getImageBtyes() != null) {
+                        newCard.getFront().setImageBytes(card.getFront().getImageBtyes());
+                    }
+                    newCard.getFront().setType(true);
+                } else {
+                    newCard.getFront().setText(card.getFront().getText());
+                }
+                newCard.getBack().setText(card.getBack().getText());
+                newCard.setDifficulty(((SeekBar)findViewById(R.id.manageCard_difficultyBar)).getProgress());
+                newCard.setHint(((TextView)findViewById(R.id.manageCard_hintInputField)).getText().toString());
+
+                library.addCard(newCard);
+
+                Intent intent = new Intent(instance, ViewLibrary.class);
+                intent.putExtra("libraryId",libraryId);
+                startActivity(intent);
+                overridePendingTransition(0,0);
             }
         });
     }
@@ -220,13 +256,17 @@ public class ManageCard extends AppCompatActivity {
                 InputStream stream = getContentResolver().openInputStream(selectedImage);
                 byte[] buffer = new byte[stream.available()];
                 stream.read(buffer);
+                stream.close();
 
-                InputStream targetStream = new ByteArrayInputStream(buffer);
-                card.getFront().setImageStream(targetStream);
+                card.getFront().setImageBytes(buffer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            ((TextView)findViewById(R.id.manageCard_imageName)).setText("test");
+
+            DocumentFile documentFile = DocumentFile.fromSingleUri(this, selectedImage);
+            String fileName = documentFile.getName();
+
+            ((TextView)findViewById(R.id.manageCard_imageName)).setText(fileName);
             cardDisplay.updateContents();
         }
     }

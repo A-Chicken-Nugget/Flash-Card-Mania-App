@@ -17,6 +17,7 @@ import com.csc331.flash_card_mania_app.CardSide;
 import com.csc331.flash_card_mania_app.R;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,8 +47,9 @@ public class CardDisplay {
             if (cardFront.getType()) {
                 View imageView = panel.findViewById(R.id.card_imageFront);
 
-                Log.d("cDebug","blah");
-                ((ImageView)imageView).setImageBitmap(BitmapFactory.decodeStream(new BufferedInputStream(cardFront.getImageStream())));
+                if (cardFront.getImageBtyes() != null) {
+                    ((ImageView)imageView).setImageBitmap(BitmapFactory.decodeStream(new ByteArrayInputStream(cardFront.getImageBtyes())));
+                }
                 imageView.setVisibility(View.VISIBLE);
             } else {
                 ((TextView)panel.findViewById(R.id.card_textFront)).setText(cardFront.getText());
