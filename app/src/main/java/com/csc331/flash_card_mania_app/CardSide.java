@@ -9,7 +9,7 @@ import java.io.InputStream;
 public class CardSide {
     private boolean type;
     private String text;
-    private byte[] imageBytes;
+    private ImageInfo imageInfo;
 
     public CardSide(String text) {
         this.text = text;
@@ -21,17 +21,15 @@ public class CardSide {
     public String getText() {
         return text;
     }
-    public byte[] getImageBtyes() {
-        return imageBytes;
+    public ImageInfo getImageInfo() {
+        return imageInfo;
     }
 
     public void setText(String text) {
         this.text = text;
-        type = false;
     }
-    public void setImageBytes(byte[] bytes) {
-        imageBytes = bytes;
-        type = true;
+    public void setImageInfo(ImageInfo imageInfo) {
+        this.imageInfo = imageInfo;
     }
     public void setType(boolean type) {
         this.type = type;

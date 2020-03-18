@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +28,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -35,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.documentfile.provider.DocumentFile;
 
 import com.csc331.flash_card_mania_app.Card;
+import com.csc331.flash_card_mania_app.ImageInfo;
 import com.csc331.flash_card_mania_app.Library;
 import com.csc331.flash_card_mania_app.Main;
 import com.csc331.flash_card_mania_app.R;
@@ -51,9 +55,11 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -84,30 +90,37 @@ public class ManageCard extends AppCompatActivity {
         //Remove the device notification bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        //If a cardId is passed in, set the new cards info accordingly
+        //Add options to difficulty dropdown
+        final Spinner difficultyDropdown = findViewById(R.id.manageCard_difficultyDropdown);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, Card.Difficulty.listAll(true));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        difficultyDropdown.setAdapter(adapter);
+
+        //Set the page title/submit button text if you are updating a card
         if (cardId != null) {
             ((TextView)findViewById(R.id.manageCard_pageTitle)).setText("Update Card");
             ((Button)findViewById(R.id.manageCard_submitButton)).setText("Update");
-            Card cardRef = library.getCardFromID(UUID.fromString(cardId));
 
-            //Front content
-            card.getFront().setType(cardRef.getFront().getType());
-            if (cardRef.getFront().getType()) {
-                card.getFront().setImageBytes(cardRef.getFront().getImageBtyes());
-            } else {
-                card.getFront().setText(cardRef.getFront().getText());
+            if (card.getFront().getType()) {
+                ImageInfo imageInfo = card.getFront().getImageInfo();
+
+                ((CheckBox)findViewById(R.id.manageCard_sideTypeCheckbox)).setChecked(true);
+                findViewById(R.id.manageCard_textInputLayout).setVisibility(View.GONE);
+                findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.VISIBLE);
+                if (imageInfo != null) {
+                    ((TextView)findViewById(R.id.manageCard_imageName)).setText(imageInfo.getName());
+                }
             }
-
-            //Back content
-            card.getBack().setText(cardRef.getBack().getText());
+            difficultyDropdown.setSelection(adapter.getPosition(card.getDifficulty().getName()));
+        } else {
+            difficultyDropdown.setSelection(0);
         }
         cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.manageCard_cardDisplay),card);
 
-        //Populate fields with card data
+        //Populate the form fields with the cards general data
         if (!card.getFront().getType()) {
-            ((TextView)findViewById(R.id.manageCard_inputText)).setText(cardDisplay.getCard().getShownSide().getText());
+            ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getFront().getText());
         }
-        ((SeekBar)findViewById(R.id.manageCard_difficultyBar)).setProgress(card.getDifficulty());
         ((TextView)findViewById(R.id.manageCard_hintInputField)).setText(card.getHint());
 
         //Handle when the back button is clicked
@@ -189,8 +202,8 @@ public class ManageCard extends AppCompatActivity {
                             findViewById(R.id.manageCard_sideTypeCheckbox).setVisibility(View.GONE);
                             findViewById(R.id.manageCard_imageInputLayout).setVisibility(View.GONE);
                             findViewById(R.id.manageCard_textInputLayout).setVisibility(View.VISIBLE);
-                            ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getText());
                         }
+                        ((TextView)findViewById(R.id.manageCard_inputText)).setText(card.getShownSide().getText());
                     }
                 });
                 oa1.start();
@@ -226,26 +239,26 @@ public class ManageCard extends AppCompatActivity {
         findViewById(R.id.manageCard_submitButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Card newCard = new Card();
+                if (!difficultyDropdown.getSelectedItem().toString().equalsIgnoreCase("--- SELECT ---")) {
+                    //Set cards general data from form
+                    card.setDifficulty(Card.Difficulty.difficultyFromName(difficultyDropdown.getSelectedItem().toString()));
+                    card.setHint(((TextView)findViewById(R.id.manageCard_hintInputField)).getText().toString());
 
-                if (card.getFront().getType()) {
-                    if (card.getFront().getImageBtyes() != null) {
-                        newCard.getFront().setImageBytes(card.getFront().getImageBtyes());
+                    //If the card is new, then add it to the library
+                    if (cardId == null) {
+                        library.addCard(card);
+                        Toast.makeText(instance, "New card added to library", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(instance, "Card successfully updated", Toast.LENGTH_SHORT).show();
                     }
-                    newCard.getFront().setType(true);
+
+                    Intent intent = new Intent(instance, ViewLibrary.class);
+                    intent.putExtra("libraryId",libraryId);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
                 } else {
-                    newCard.getFront().setText(card.getFront().getText());
+                    Toast.makeText(instance, "Please select a difficulty option", Toast.LENGTH_SHORT).show();
                 }
-                newCard.getBack().setText(card.getBack().getText());
-                newCard.setDifficulty(((SeekBar)findViewById(R.id.manageCard_difficultyBar)).getProgress());
-                newCard.setHint(((TextView)findViewById(R.id.manageCard_hintInputField)).getText().toString());
-
-                library.addCard(newCard);
-
-                Intent intent = new Intent(instance, ViewLibrary.class);
-                intent.putExtra("libraryId",libraryId);
-                startActivity(intent);
-                overridePendingTransition(0,0);
             }
         });
     }
@@ -261,16 +274,15 @@ public class ManageCard extends AppCompatActivity {
                 stream.read(buffer);
                 stream.close();
 
-                card.getFront().setImageBytes(buffer);
+                DocumentFile file = DocumentFile.fromSingleUri(this, selectedImage);
+                ImageInfo imageInfo = new ImageInfo(file.getName(),file.length(),file.getType(),buffer);
+
+                card.getFront().setImageInfo(imageInfo);
+                ((TextView)findViewById(R.id.manageCard_imageName)).setText(file.getName());
+                cardDisplay.updateContents();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            DocumentFile documentFile = DocumentFile.fromSingleUri(this, selectedImage);
-            String fileName = documentFile.getName();
-
-            ((TextView)findViewById(R.id.manageCard_imageName)).setText(fileName);
-            cardDisplay.updateContents();
         }
     }
 }
