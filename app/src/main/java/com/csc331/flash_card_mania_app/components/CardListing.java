@@ -30,8 +30,8 @@ public class CardListing {
         if (cardFront.getType()) {
             View imageView = panel.findViewById(R.id.cardListing_image);
 
-            if (cardFront.getImageBtyes() != null) {
-                ((ImageView)imageView).setImageBitmap(BitmapFactory.decodeStream(new ByteArrayInputStream(cardFront.getImageBtyes())));
+            if (cardFront.getImageInfo() != null) {
+                ((ImageView)imageView).setImageBitmap(cardFront.getImageInfo().getBitmap());
             }
             panel.findViewById(R.id.cardListing_text).setVisibility(View.INVISIBLE);
             imageView.setVisibility(View.VISIBLE);
