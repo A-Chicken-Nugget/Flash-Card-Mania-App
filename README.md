@@ -17,7 +17,7 @@ we also talked about Object-Oriented Programming concepts to store cards and lib
 - February 6th - Meeting included programmers working out details of Android development. Design was talked about in terms of refinement.
 - February 11th - Meeting was mostly focused on programmers. Small talks about design.
 - February 18th - Meeting included talks of the presentation. Our current work is summed up and presented in our github repository.
-- April 9th - Since the school shut down we've been mostly working through Discord and communicating ideas. We have been completing required documents with the help of the developers. 
+- April 9th - Since the school shut down we've been mostly working through Discord and communicating ideas. We have been completing required documents with the help of the developers. We met today to talk about different documents. 
 
 ## Technologies Used
 - Git/Github (Version Control Software)
