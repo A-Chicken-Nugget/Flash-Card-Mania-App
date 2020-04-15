@@ -20,6 +20,7 @@
             android:layout_width="102dp"
             android:layout_height="38dp"
             android:background="#00FFFFFF"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/manageLibrary_page_title"

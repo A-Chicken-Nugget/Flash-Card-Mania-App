@@ -133,7 +133,7 @@ public class ViewLibrary extends AppCompatActivity {
                 space.setMinimumWidth(layout.getWidth());
                 space.setMinimumHeight(20);
                 layout.addView(space);
-
+              
                 //Handle when the edit button is clicked
                 listing.getPanel().findViewById(R.id.cardListing_editButton).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {

@@ -16,7 +16,7 @@ public class Library {
         this.description = description;
 
         cards = new ArrayList<Card>() {{
-//            add(new Card("test hint",50));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
         }};
     }
 
