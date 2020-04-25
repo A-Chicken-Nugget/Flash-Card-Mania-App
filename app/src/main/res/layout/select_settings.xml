@@ -29,10 +29,10 @@
             app:srcCompat="@mipmap/back_arrow" />
 
         <TextView
-            android:id="@+id/selectlibrary_text_view"
+            android:id="@+id/selectSettings_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Library"
+            android:text="... Settings"
             android:textColor="#000000"
             android:textSize="24sp"
             android:visibility="visible"
@@ -59,13 +59,10 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
         <LinearLayout
-            android:id="@+id/selectLibrary_libraryLayout"
+            android:id="@+id/selectSettings_settingsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

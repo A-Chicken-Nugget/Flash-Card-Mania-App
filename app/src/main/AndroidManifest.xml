@@ -40,8 +40,20 @@
             android:label="Manage Card"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".pages.SelectSettings"
+            android:label="Select Settings"
+            android:theme="@style/AppTheme">
+        </activity>
         <activity android:name=".pages.Learn"
             android:label="Learn"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".pages.Test"
+            android:label="Test"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".pages.TestResults"
+            android:label="Test Results"
             android:theme="@style/AppTheme">
         </activity>
     </application>

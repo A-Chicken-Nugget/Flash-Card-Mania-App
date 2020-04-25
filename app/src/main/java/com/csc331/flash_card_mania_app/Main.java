@@ -17,6 +17,8 @@ public class Main {
             library = new Library("Default Library 2","Math","......");
             put(library.getID(),library);
         }};
+
+        userProfile = new UserProfile();
     }
 
     public void loadData() {
