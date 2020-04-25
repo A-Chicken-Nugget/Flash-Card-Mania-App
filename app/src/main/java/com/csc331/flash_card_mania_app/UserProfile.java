@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class UserProfile {
-//    private int id;
-//    private String email;
-//    private String userName;
-    private ArrayList<TestScore> testScores;
-    private HashMap<UUID,Integer> timeSpentLearning;
+    private ArrayList<TestResult> testResults = new ArrayList<>();
+    private HashMap<UUID,Integer> timeSpentLearning = new HashMap<>();
 
-    public UserProfile(ArrayList<TestScore> testScores, HashMap<UUID,Integer> timeSpentLearning) {
-        this.testScores = testScores;
+    public UserProfile() {
+    }
+    public UserProfile(ArrayList<TestResult> testResults, HashMap<UUID,Integer> timeSpentLearning) {
+        this.testResults = testResults;
         this.timeSpentLearning = timeSpentLearning;
     }
 
@@ -23,7 +22,11 @@ public class UserProfile {
             timeSpentLearning.put(id,timeSpentLearning.get(id) + time);
         }
     }
-    public void addTestScore(TestScore score) {
-        testScores.add(score);
+    public void addTestScore(TestResult result) {
+        testResults.add(result);
     }
+    public TestResult getLatestTestResult() {
+        return testResults.get(testResults.size()-1);
+    }
+
 }
