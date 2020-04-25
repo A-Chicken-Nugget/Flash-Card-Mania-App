@@ -49,8 +49,8 @@ public class Test extends AppCompatActivity {
         ArrayList<TestQuestion> testQuestions = new ArrayList<>();
         int numberCorrect = 0;
 
-        for (int q = 0; q < cardPool.size(); q++) {
-            Card card = cardPool.get(q);
+        for (int q = 1; q < cardPool.size()+1; q++) {
+            Card card = cardPool.get(q-1);
             boolean correct = false;
 
             if (answers.get(q) != null && card.getBack().getText().toLowerCase().equals(answers.get(q).toLowerCase())) {
@@ -63,9 +63,6 @@ public class Test extends AppCompatActivity {
                 testQuestions.add(new TestQuestion(card.getFront().getImageInfo(),answers.get(q),card.getBack().getText(),correct));
             }
         }
-        Log.d("cDebug","Test1: " + (100*(double)numberCorrect/cardPool.size()));
-        Log.d("cDebug","Test2: " + (double)numberCorrect/cardPool.size());
-        Log.d("cDebug","Test3: " + numberCorrect + " : " + cardPool.size());
         mainInstance.getProfile().addTestScore(new TestResult(library.getName() + " Test",(int)(100*(double)numberCorrect/cardPool.size()),(int)((System.currentTimeMillis()/1000L)-timeStarted),testQuestions));
         startActivity(new Intent(this, TestResults.class));
         overridePendingTransition(0,0);
@@ -99,6 +96,7 @@ public class Test extends AppCompatActivity {
         //
         if (difficulty.equals("All difficulties")) {
             cardPool = library.getCards();
+            Collections.shuffle(cardPool);
         } else {
             ArrayList<Card> cards = library.getCardsFromDifficulty(Card.Difficulty.difficultyFromName(difficulty));
 
@@ -115,7 +113,7 @@ public class Test extends AppCompatActivity {
         //
         // Test start
         //
-        new CountDownTimer(7000, 1000) {
+        new CountDownTimer(6000, 1000) {
             public void onTick(long millisUntilFinished) {
                 long timeLeft = (millisUntilFinished/1000);
 
@@ -146,7 +144,7 @@ public class Test extends AppCompatActivity {
             }
         }.start();
 
-        cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.test_cardDisplay),cardPool.get(0));
+        cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.test_cardDisplay),cardPool.get(0),false);
 
         //
         // ETC
@@ -175,7 +173,7 @@ public class Test extends AppCompatActivity {
                                 currentQuestion++;
                                 ((TextView)findViewById(R.id.test_questionDisplay)).setText("Question " + currentQuestion + " out of " + cardCount);
                                 ((TextInputEditText)findViewById(R.id.test_questionInput)).setText("");
-                                cardDisplay = new CardDisplay(instance,(ViewGroup)findViewById(R.id.test_cardDisplay),cardPool.get(currentQuestion-1));
+                                cardDisplay = new CardDisplay(instance,(ViewGroup)findViewById(R.id.test_cardDisplay),cardPool.get(currentQuestion-1),false);
                                 if (showHints) {
                                     ((TextInputEditText)findViewById(R.id.test_questionInput)).setHint(cardPool.get(currentQuestion-1).getHint());
                                 }
@@ -185,6 +183,7 @@ public class Test extends AppCompatActivity {
                             } else {
                                 completeTest();
                             }
+                            cardDisplay.updateContents();
                         }
                     });
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
@@ -199,7 +198,7 @@ public class Test extends AppCompatActivity {
                         currentQuestion++;
                         ((TextView)findViewById(R.id.test_questionDisplay)).setText("Question " + currentQuestion + " out of " + cardCount);
                         ((TextInputEditText)findViewById(R.id.test_questionInput)).setText("");
-                        cardDisplay = new CardDisplay(instance,(ViewGroup)findViewById(R.id.test_cardDisplay),cardPool.get(currentQuestion-1));
+                        cardDisplay = new CardDisplay(instance,(ViewGroup)findViewById(R.id.test_cardDisplay),cardPool.get(currentQuestion-1),false);
                         if (showHints) {
                             ((TextInputEditText)findViewById(R.id.test_questionInput)).setHint(cardPool.get(currentQuestion-1).getHint());
                         }
@@ -209,6 +208,7 @@ public class Test extends AppCompatActivity {
                     } else {
                         completeTest();
                     }
+                    cardDisplay.updateContents();
                 }
             }
         });

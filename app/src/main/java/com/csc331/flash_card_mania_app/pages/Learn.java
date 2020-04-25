@@ -65,7 +65,7 @@ public class Learn extends AppCompatActivity {
             Collections.shuffle(cards);
         }
         card = cards.get(0);
-        cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.learn_cardDisplay),card);
+        cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.learn_cardDisplay),card,true);
 
         //Handle when the card display is clicked
         findViewById(R.id.learn_cardDisplay).setOnClickListener(new View.OnClickListener() {

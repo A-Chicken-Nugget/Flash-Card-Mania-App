@@ -31,10 +31,15 @@ public class CardDisplay {
     private View panel;
     private Card card;
 
-    public CardDisplay(Context context, ViewGroup layout, Card card) {
+    public CardDisplay(Context context, ViewGroup layout, Card card, boolean displaySide) {
         this.context = context;
+        layout.removeAllViews();
         panel = LayoutInflater.from(context).inflate(R.layout.card, layout, true);
         this.card = card;
+
+        if (!displaySide) {
+            panel.findViewById(R.id.card_sideDisplay).setVisibility(View.GONE);
+        }
 
         updateContents();
     }
