@@ -115,7 +115,7 @@ public class ManageCard extends AppCompatActivity {
         } else {
             difficultyDropdown.setSelection(0);
         }
-        cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.manageCard_cardDisplay),card);
+        cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.manageCard_cardDisplay),card,true);
 
         //Populate the form fields with the cards general data
         if (!card.getFront().getType()) {
