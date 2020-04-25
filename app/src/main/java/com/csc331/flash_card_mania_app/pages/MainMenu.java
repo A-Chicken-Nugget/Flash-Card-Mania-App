@@ -39,6 +39,16 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(instance, SelectLibrary.class);
 
+                intent.putExtra("testType",false);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        });
+        findViewById(R.id.test_button).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(instance, SelectLibrary.class);
+
+                intent.putExtra("testType",true);
                 startActivity(intent);
                 overridePendingTransition(0,0);
             }

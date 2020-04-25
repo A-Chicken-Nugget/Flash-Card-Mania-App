@@ -17,6 +17,19 @@ public class Library {
 
         cards = new ArrayList<Card>() {{
             add(new Card("test hint", Card.Difficulty.MEDIUM));
+            add(new Card("test hint", Card.Difficulty.EASY));
+            add(new Card("test hint", Card.Difficulty.EASY));
+            add(new Card("test hint", Card.Difficulty.EASY));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
+            add(new Card("test hint", Card.Difficulty.HARD));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
+            add(new Card("test hint", Card.Difficulty.HARD));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
+            add(new Card("test hint", Card.Difficulty.MEDIUM));
         }};
     }
 
@@ -51,6 +64,16 @@ public class Library {
     }
     public ArrayList<Card> getCards() {
         return cards;
+    }
+    public ArrayList<Card> getCardsFromDifficulty(Card.Difficulty difficulty) {
+        ArrayList<Card> cardsToReturn = new ArrayList<Card>();
+
+        for (Card card : cards) {
+            if (card.getDifficulty().equals(difficulty)) {
+                cardsToReturn.add(card);
+            }
+        }
+        return cardsToReturn;
     }
 
     public void setName(String name) {

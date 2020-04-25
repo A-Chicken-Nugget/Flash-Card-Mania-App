@@ -55,7 +55,7 @@ public class MyLibraries extends AppCompatActivity {
             for (Map.Entry<UUID,Library> entry : libraries.entrySet()) {
                 Library library = entry.getValue();
 
-                final LibraryListing listing = new LibraryListing(this,layout,library);
+                final LibraryListing listing = new LibraryListing(this,layout,library,true);
                 listing.setName(library.getName());
                 listing.setSubject(library.getSubject());
                 listing.setCardCount(library.getCards().size() + " cards");
