@@ -143,6 +143,28 @@ public class SelectSettings extends AppCompatActivity {
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {}
             });
+        } else {
+            ((TextView)findViewById(R.id.selectSettings_title)).setText("Learn Settings");
+            ((TextView)findViewById(R.id.selectSettings_title)).setGravity(Gravity.CENTER);
+
+            //Randomize order
+            final CheckboxField randomizeOrder = new CheckboxField(this,layout,"Randomize order:");
+            layout.addView(randomizeOrder.getPanel());
+
+            //Start test
+            ButtonField startLearning = new ButtonField(this,layout,"Start learning");
+            layout.addView(startLearning.getPanel());
+
+            startLearning.getPanel().findViewById(R.id.field_button).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(instance, Learn.class);
+
+                    intent.putExtra("libraryId",String.valueOf(library.getID()));
+                    intent.putExtra("randomizeOrder",randomizeOrder.getCheckedValue());
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                }
+            });
         }
 
         //Handle when the back button is clicked

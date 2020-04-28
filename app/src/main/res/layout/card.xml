@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/main_menu_chalkboard"
+        app:srcCompat="@mipmap/fcm_banner"
         tools:visibility="gone" />
 
     <TextView

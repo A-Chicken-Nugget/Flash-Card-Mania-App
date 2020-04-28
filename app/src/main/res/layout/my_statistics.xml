@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9BBD21">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/myStatistics_backButton"
+            android:layout_width="102dp"
+            android:layout_height="38dp"
+            android:background="#00FFFFFF"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/manageLibrary_page_title"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/back_arrow" />
+
+        <TextView
+            android:id="@+id/manageLibrary_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Statistics"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/myStatistics_testingPageButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Testing History"
+        app:layout_constraintEnd_toStartOf="@+id/myStatistics_learningPageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+
+    <Button
+        android:id="@+id/myStatistics_learningPageButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Learning History"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/myStatistics_testingPageButton"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+
+    <ScrollView
+        android:id="@+id/myStatistics_testingHistory"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#B8A79F"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myStatistics_testingPageButton">
+
+        <LinearLayout
+            android:id="@+id/myStatistics_testingHistoryLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/myStatistics_learningHistory"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#B8A79F"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myStatistics_testingPageButton"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/myStatistics_learningHistoryLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
