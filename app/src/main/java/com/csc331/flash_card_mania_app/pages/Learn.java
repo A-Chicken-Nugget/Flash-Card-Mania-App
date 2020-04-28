@@ -40,32 +40,36 @@ import java.util.UUID;
 
 public class Learn extends AppCompatActivity {
     private Main mainInstance = Main.getInstance();
-    private Card card;
+    private Library library;
+    private ArrayList<Card> cardPool = new ArrayList<>();
     private CardDisplay cardDisplay;
+    private long timeStarted;
+    private int currentCard = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Learn instance = this;
-        //Get the library id
-        final String id = getIntent().getStringExtra("libraryId");
-        final String randomized = getIntent().getStringExtra("isRandom");
-        //If the id isn't null, get the library from its passed in id
-        final Library library = (id != null ? mainInstance.getLibraryById(UUID.fromString(id)) : null);
+
+        final Library library = mainInstance.getLibraryById(UUID.fromString(getIntent().getStringExtra("libraryId")));
+        final Boolean randomizeOrder = getIntent().getBooleanExtra("randomizeOrder",false);
 
         //Set this pages view layout
         setContentView(R.layout.learn);
-        ((TextView)findViewById(R.id.learn_library_name)).setText(library.getName());
         //Remove the default app header
         getSupportActionBar().hide();
         //Remove the device notification bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ArrayList<Card> cards = library.getCards();
-        if (randomized == "True") {
-            Collections.shuffle(cards);
+
+        ((TextView)findViewById(R.id.learn_library_name)).setText(library.getName());
+
+        ArrayList<Card> cardPool = library.getCards();
+        if (randomizeOrder) {
+            Collections.shuffle(cardPool);
         }
-        card = cards.get(0);
-        cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.learn_cardDisplay),card,true);
+        final ArrayList<Card> cards = new ArrayList<Card>(cardPool);
+        cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.learn_cardDisplay),cardPool.get(currentCard),true);
 
         //Handle when the card display is clicked
         findViewById(R.id.learn_cardDisplay).setOnClickListener(new View.OnClickListener() {
@@ -87,18 +91,47 @@ public class Learn extends AppCompatActivity {
             }
         });
 
+        //Handle when the next button is clicked
+        findViewById(R.id.learn_next_card_button).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentCard++;
+
+                if (currentCard > cards.size()) {
+                    currentCard = 0;
+                }
+                cardDisplay = new CardDisplay(instance,(ViewGroup)findViewById(R.id.learn_cardDisplay),cards.get(currentCard),true);
+            }
+        });
+
+        //Handle when the next button is clicked
+        findViewById(R.id.learn_next_card_button).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentCard++;
+
+                if (currentCard > cards.size()) {
+                    currentCard = 0;
+                }
+                findViewById(R.id.learn_hintDisplay).setVisibility(View.GONE);
+                cardDisplay = new CardDisplay(instance,(ViewGroup)findViewById(R.id.learn_cardDisplay),cards.get(currentCard),true);
+            }
+        });
+
+        //Handle when the show hint button is clicked
+        findViewById(R.id.learn_showHintButton).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ((TextView)findViewById(R.id.learn_hintDisplay)).setText(cards.get(currentCard).getHint());
+                findViewById(R.id.learn_hintDisplay).setVisibility(View.VISIBLE);
+            }
+        });
+
         //Handle when the back button is clicked
         findViewById(R.id.learn_back_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(instance, SelectLibrary.class);
+                Intent intent = new Intent(instance, MainMenu.class);
 
                 startActivity(intent);
                 overridePendingTransition(0,0);
             }
         });
-
-        //if (cards.size() > 0) {
-        //} else {
-        //}
     }
 }
