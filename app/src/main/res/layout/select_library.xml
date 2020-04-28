@@ -20,6 +20,8 @@
             android:layout_width="102dp"
             android:layout_height="38dp"
             android:background="#00FFFFFF"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"

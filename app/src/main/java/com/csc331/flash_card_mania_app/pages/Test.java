@@ -79,7 +79,7 @@ public class Test extends AppCompatActivity {
         final int cardCount = getIntent().getIntExtra("cardCount",0);
         final String difficulty = getIntent().getStringExtra("difficulty");
         final Boolean showHints = getIntent().getBooleanExtra("showHints",false);
-        final int timerLength = getIntent().getIntExtra("timerLength",1)*60;
+        final int timerLength = 20;//getIntent().getIntExtra("timerLength",1)*60;
 
         //Set this pages view layout
         setContentView(R.layout.test);
@@ -135,6 +135,8 @@ public class Test extends AppCompatActivity {
                             Toast.makeText(instance, "1 minute left", Toast.LENGTH_SHORT).show();
                         } else if (timeLeft == 10) {
                             Toast.makeText(instance, "10 seconds left", Toast.LENGTH_SHORT).show();
+                        } else if (timeLeft <= 0) {
+                            findViewById(R.id.test_timeUpPanel).setVisibility(View.VISIBLE);
                         }
                     }
                     public void onFinish() {
@@ -153,7 +155,7 @@ public class Test extends AppCompatActivity {
         //Handle when the view results button is clicked
         findViewById(R.id.test_timeUpButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                completeTest();
             }
         });
 

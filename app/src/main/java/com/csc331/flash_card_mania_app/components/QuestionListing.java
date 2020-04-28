@@ -27,7 +27,7 @@ public class QuestionListing {
             panel.findViewById(R.id.question_questionImage).setVisibility(View.VISIBLE);
         }
         ((TextView)panel.findViewById(R.id.question_correctAnswer)).setText("Correct: " + question.getCorrectAnswer());
-        ((TextView)panel.findViewById(R.id.question_inputtedAnswer)).setText("You said: " + question.getAnswer());
+        ((TextView)panel.findViewById(R.id.question_inputtedAnswer)).setText("You said: " + (question.getAnswer() != null ? question.getAnswer() : ""));
         if (!question.didGetCorrect()) {
             panel.findViewById(R.id.question_correctImage).setVisibility(View.GONE);
             panel.findViewById(R.id.question_incorrectImage).setVisibility(View.VISIBLE);

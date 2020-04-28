@@ -28,5 +28,7 @@ public class UserProfile {
     public TestResult getLatestTestResult() {
         return testResults.get(testResults.size()-1);
     }
-
+    public ArrayList<TestResult> getTestResults() {
+        return testResults;
+    }
 }
