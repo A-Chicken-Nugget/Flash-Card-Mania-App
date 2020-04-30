@@ -63,27 +63,27 @@ public class Main {
                 }
                 myLibraries = new Gson().fromJson(sb.toString(),new TypeToken<HashMap<UUID,Library>>(){}.getType());
 
-//                //Load test results
-//                isr = new InputStreamReader(context.openFileInput("test_results.txt"));
-//                br = new BufferedReader(isr);
-//                sb = new StringBuilder();
-//
-//                while ((text = br.readLine()) != null) {
-//                    sb.append(text).append("\n");
-//                }
-//                ArrayList<TestResult> testResults = new Gson().fromJson(sb.toString(),new TypeToken<ArrayList<TestResult>>(){}.getType());
-//                userProfile.setTestResults(testResults);
-//
-//                //Load time spent learning
-//                isr = new InputStreamReader(context.openFileInput("learning_time.txt"));
-//                br = new BufferedReader(isr);
-//                sb = new StringBuilder();
-//
-//                while ((text = br.readLine()) != null) {
-//                    sb.append(text).append("\n");
-//                }
-//                HashMap<UUID,Integer> timeSpent = new Gson().fromJson(sb.toString(),new TypeToken<HashMap<UUID,Integer>>(){}.getType());
-//                userProfile.setTimeSpentLearning(timeSpent);
+                //Load test results
+                isr = new InputStreamReader(context.openFileInput("test_results.txt"));
+                br = new BufferedReader(isr);
+                sb = new StringBuilder();
+
+                while ((text = br.readLine()) != null) {
+                    sb.append(text).append("\n");
+                }
+                ArrayList<TestResult> testResults = new Gson().fromJson(sb.toString(),new TypeToken<ArrayList<TestResult>>(){}.getType());
+                userProfile.setTestResults(testResults);
+
+                //Load time spent learning
+                isr = new InputStreamReader(context.openFileInput("learning_time.txt"));
+                br = new BufferedReader(isr);
+                sb = new StringBuilder();
+
+                while ((text = br.readLine()) != null) {
+                    sb.append(text).append("\n");
+                }
+                HashMap<UUID,Integer> timeSpent = new Gson().fromJson(sb.toString(),new TypeToken<HashMap<UUID,Integer>>(){}.getType());
+                userProfile.setTimeSpentLearning(timeSpent);
             }
         } catch (Exception e) {
             Log.d("cDebug","Error: " + e.getMessage());

@@ -256,6 +256,8 @@ public class ManageCard extends AppCompatActivity {
                     intent.putExtra("libraryId",libraryId);
                     startActivity(intent);
                     overridePendingTransition(0,0);
+
+                    mainInstance.saveData();
                 } else {
                     Toast.makeText(instance, "Please select a difficulty option", Toast.LENGTH_SHORT).show();
                 }

@@ -18,6 +18,7 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Main.createNewMainInstance(this.getApplicationContext());
+        Main.getInstance().loadData();
 
         final MainMenu instance = this;
 

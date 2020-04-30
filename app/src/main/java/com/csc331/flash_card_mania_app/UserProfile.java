@@ -25,9 +25,11 @@ public class UserProfile {
         } else {
             timeSpentLearning.put(id,timeSpentLearning.get(id) + time);
         }
+        Main.getInstance().saveData();
     }
     public void addTestScore(TestResult result) {
         testResults.add(result);
+        Main.getInstance().saveData();
     }
     public void setLastLearningInstance(Learn instance) {lastLearningInstance = instance;}
     public Learn getLastLearningInstance() {return lastLearningInstance;}

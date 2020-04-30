@@ -103,6 +103,7 @@ public class ManageLibrary extends AppCompatActivity {
                         }
                         startActivity(new Intent(instance, MyLibraries.class));
                         overridePendingTransition(0,0);
+                        mainInstance.saveData();
                     } else {
                         AlertDialog alertDialog = new AlertDialog.Builder(instance).create();
                         alertDialog.setTitle("Create?");
@@ -117,6 +118,7 @@ public class ManageLibrary extends AppCompatActivity {
                                 }
                                 startActivity(new Intent(instance, MyLibraries.class));
                                 overridePendingTransition(0,0);
+                                mainInstance.saveData();
                             }
                         });
                         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {

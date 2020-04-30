@@ -31,14 +31,7 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0,0);
 
         requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
-
-        Main.getInstance().loadData(this.getApplicationContext());
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

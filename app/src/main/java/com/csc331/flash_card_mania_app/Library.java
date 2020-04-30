@@ -17,19 +17,6 @@ public class Library {
 
         cards = new ArrayList<Card>() {{
             add(new Card("test hint", Card.Difficulty.MEDIUM));
-            add(new Card("test hint", Card.Difficulty.EASY));
-            add(new Card("test hint", Card.Difficulty.EASY));
-            add(new Card("test hint", Card.Difficulty.EASY));
-            add(new Card("test hint", Card.Difficulty.MEDIUM));
-            add(new Card("test hint", Card.Difficulty.MEDIUM));
-            add(new Card("test hint", Card.Difficulty.MEDIUM));
-            add(new Card("test hint", Card.Difficulty.MEDIUM));
-            add(new Card("test hint", Card.Difficulty.HARD));
-            add(new Card("test hint", Card.Difficulty.MEDIUM));
-            add(new Card("test hint", Card.Difficulty.MEDIUM));
-            add(new Card("test hint", Card.Difficulty.HARD));
-            add(new Card("test hint", Card.Difficulty.MEDIUM));
-            add(new Card("test hint", Card.Difficulty.MEDIUM));
         }};
 
     }
