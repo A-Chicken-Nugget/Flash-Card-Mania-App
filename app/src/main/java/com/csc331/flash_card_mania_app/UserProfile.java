@@ -1,12 +1,16 @@
 package com.csc331.flash_card_mania_app;
 
+import com.csc331.flash_card_mania_app.pages.Learn;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+
 public class UserProfile {
     private ArrayList<TestResult> testResults = new ArrayList<>();
     private HashMap<UUID,Integer> timeSpentLearning = new HashMap<>();
+    private Learn lastLearningInstance = null;
 
     public UserProfile() {
     }
@@ -25,6 +29,8 @@ public class UserProfile {
     public void addTestScore(TestResult result) {
         testResults.add(result);
     }
+    public void setLastLearningInstance(Learn instance) {lastLearningInstance = instance;}
+    public Learn getLastLearningInstance() {return lastLearningInstance;}
     public TestResult getLatestTestResult() {
         return testResults.get(testResults.size()-1);
     }

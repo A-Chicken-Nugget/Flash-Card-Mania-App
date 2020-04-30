@@ -46,6 +46,9 @@ public class Learn extends AppCompatActivity {
     private long timeStarted;
     private int currentCard = 0;
 
+    public long getTimeStarted() {return timeStarted;}
+    public Library getLibrary() {return library;}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,8 @@ public class Learn extends AppCompatActivity {
         }
         final ArrayList<Card> cards = new ArrayList<Card>(cardPool);
         cardDisplay = new CardDisplay(this,(ViewGroup)findViewById(R.id.learn_cardDisplay),cardPool.get(currentCard),true);
+
+        timeStarted = System.currentTimeMillis()/1000L;
 
         //Handle when the card display is clicked
         findViewById(R.id.learn_cardDisplay).setOnClickListener(new View.OnClickListener() {
@@ -127,6 +132,8 @@ public class Learn extends AppCompatActivity {
         //Handle when the back button is clicked
         findViewById(R.id.learn_back_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                mainInstance.getProfile().addTimeSpentLearning(library.getID(),(int)((System.currentTimeMillis()/1000L)-timeStarted));
+
                 Intent intent = new Intent(instance, MainMenu.class);
 
                 startActivity(intent);

@@ -31,6 +31,7 @@ public class Library {
             add(new Card("test hint", Card.Difficulty.MEDIUM));
             add(new Card("test hint", Card.Difficulty.MEDIUM));
         }};
+
     }
 
     public void addCard(Card card) {
@@ -62,6 +63,7 @@ public class Library {
         }
         return returnCard;
     }
+
     public ArrayList<Card> getCards() {
         return cards;
     }
