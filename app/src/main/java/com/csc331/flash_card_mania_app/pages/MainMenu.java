@@ -13,11 +13,11 @@ import com.csc331.flash_card_mania_app.Main;
 import com.csc331.flash_card_mania_app.R;
 
 public class MainMenu extends AppCompatActivity {
-    private Main mainInstance = Main.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Main.createNewMainInstance(this.getApplicationContext());
 
         final MainMenu instance = this;
 

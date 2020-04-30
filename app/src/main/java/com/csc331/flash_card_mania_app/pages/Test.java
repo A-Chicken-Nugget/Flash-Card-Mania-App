@@ -81,7 +81,7 @@ public class Test extends AppCompatActivity {
         final int cardCount = getIntent().getIntExtra("cardCount",0);
         final String difficulty = getIntent().getStringExtra("difficulty");
         final Boolean showHints = getIntent().getBooleanExtra("showHints",false);
-        final int timerLength = 20;//getIntent().getIntExtra("timerLength",1)*60;
+        final int timerLength = getIntent().getIntExtra("timerLength",1)*60;
 
         //Set this pages view layout
         setContentView(R.layout.test);
