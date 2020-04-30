@@ -9,13 +9,15 @@ public class TestResult {
     private String letterGrade;
     private int totalQuestions;
     private int questionsCorrectlyAnswered = 0;
-    private int timeSpent;
+    private Integer timeSpent;
+    private String date;
 
-    public TestResult(String testName, int percentCorrect, int timeSpent, ArrayList<TestQuestion> questions) {
+    public TestResult(String testName, int percentCorrect, Integer timeSpent, String date, ArrayList<TestQuestion> questions) {
         this.testName = testName;
         this.percentCorrect = percentCorrect;
         this.timeSpent = timeSpent;
         this.questions = questions;
+        this.date = date;
 
         if (percentCorrect > 90) {
             letterGrade = "A";
@@ -40,10 +42,11 @@ public class TestResult {
     public String getTestName() {
         return testName;
     }
+    public String getDate() {return date;}
     public int getPercentCorrect() {
         return percentCorrect;
     }
-    public int getTimeSpent() {
+    public Integer getTimeSpent() {
         return timeSpent;
     }
     public ArrayList<TestQuestion> getTestQuestions() {

@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
+import java.time.LocalDate;
 
 public class Test extends AppCompatActivity {
     private Main mainInstance = Main.getInstance();
@@ -44,6 +45,7 @@ public class Test extends AppCompatActivity {
     private CardDisplay cardDisplay;
     private long timeStarted;
     private int currentQuestion = 1;
+    private String date;
 
     public void completeTest() {
         ArrayList<TestQuestion> testQuestions = new ArrayList<>();
@@ -63,7 +65,7 @@ public class Test extends AppCompatActivity {
                 testQuestions.add(new TestQuestion(card.getFront().getImageInfo(),answers.get(q),card.getBack().getText(),correct));
             }
         }
-        mainInstance.getProfile().addTestScore(new TestResult(library.getName() + " Test",(int)(100*(double)numberCorrect/cardPool.size()),(int)((System.currentTimeMillis()/1000L)-timeStarted),testQuestions));
+        mainInstance.getProfile().addTestScore(new TestResult(library.getName() + " Test",(int)(100*(double)numberCorrect/cardPool.size()),(int)((System.currentTimeMillis()/1000L)-timeStarted),date,testQuestions));
         startActivity(new Intent(this, TestResults.class));
         overridePendingTransition(0,0);
     }
@@ -124,6 +126,7 @@ public class Test extends AppCompatActivity {
             public void onFinish() {
                 findViewById(R.id.test_beginPanel).setVisibility(View.GONE);
                 timeStarted = System.currentTimeMillis()/1000L;
+                date = LocalDate.now().toString();
 
                 //Handle timer display
                 new CountDownTimer(timerLength*1000, 1000) {

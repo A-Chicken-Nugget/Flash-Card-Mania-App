@@ -55,6 +55,16 @@ public class MainMenu extends AppCompatActivity {
         });
         findViewById(R.id.about_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent intent = new Intent(instance, About.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        });
+        findViewById(R.id.statistics_button).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(instance, MyStatistics.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
             }
         });
     }

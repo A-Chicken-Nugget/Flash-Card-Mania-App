@@ -10,8 +10,13 @@ import com.csc331.flash_card_mania_app.pages.MainMenu;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
+import com.csc331.flash_card_mania_app.Main;
+import com.csc331.flash_card_mania_app.pages.Learn;
 
 public class MainActivity extends AppCompatActivity {
+    private Main mainInstance = Main.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intent);
         overridePendingTransition(0,0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Learn lastInstance = mainInstance.getProfile().getLastLearningInstance();
+        mainInstance.getProfile().addTimeSpentLearning(lastInstance.getLibrary().getID(),(int)((System.currentTimeMillis()/1000L)-lastInstance.getTimeStarted()));
     }
 }
