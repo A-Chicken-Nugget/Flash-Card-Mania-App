@@ -31,4 +31,14 @@ public class UserProfile {
     public ArrayList<TestResult> getTestResults() {
         return testResults;
     }
+    public HashMap<UUID,Integer> getTimeSpentLearning() {
+        return timeSpentLearning;
+    }
+
+    public void setTestResults(ArrayList<TestResult> testResults) {
+        this.testResults = testResults;
+    }
+    public void setTimeSpentLearning(HashMap<UUID,Integer> timeSpentLearning) {
+        this.timeSpentLearning = timeSpentLearning;
+    }
 }
